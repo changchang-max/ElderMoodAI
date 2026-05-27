@@ -1,0 +1,105 @@
+openapi: "3.0.3"
+info:
+  title: ElderMoodAI - 预警接口
+  version: "1.0.0"
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/alerts:
+    get:
+      summary: 获取预警记录列表
+      parameters:
+        - name: status
+          in: query
+          schema: { type: string, enum: [pending, handled, all], default: all }
+        - name: elderId
+          in: query
+          schema: { type: integer }
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: pageSize
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  list:
+                    type: array
+                    items: { $ref: "#/components/schemas/AlertRecord" }
+
+  /api/alerts/{id}/handle:
+    patch:
+      summary: 标记预警为已处理
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200": { description: 标记成功 }
+        "404": { description: 预警记录不存在 }
+        "409": { description: 已处理，无需重复操作 }
+
+  /api/alerts/batch-handle:
+    post:
+      summary: 批量标记已处理
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ids]
+              properties:
+                ids:
+                  type: array
+                  items: { type: integer }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  handled: { type: integer, description: 成功处理数量 }
+
+  /api/alerts/stream:
+    get:
+      summary: 实时预警推送（Server-Sent Events）
+      description: 客户端订阅此接口接收实时预警通知
+      responses:
+        "200":
+          description: SSE 流
+          content:
+            text/event-stream:
+              schema:
+                type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    AlertRecord:
+      type: object
+      properties:
+        id: { type: integer }
+        elderId: { type: integer }
+        elderName: { type: string }
+        emotionLabel: { type: string }
+        alertLevel: { type: string, enum: [low, medium, high] }
+        status: { type: string, enum: [pending, handled] }
+        handledBy: { type: string, nullable: true }
+        handledAt: { type: string, format: date-time, nullable: true }
+        createdAt: { type: string, format: date-time }

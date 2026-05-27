@@ -1,0 +1,171 @@
+openapi: "3.0.3"
+info:
+  title: ElderMoodAI - 情感分析接口
+  version: "1.0.0"
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/emotion/analyze:
+    post:
+      summary: 提交多模态数据并触发情感分析
+      description: |
+        至少提交一种模态数据（文本/语音/图像）。
+        老人必须已开启隐私授权，否则返回403。
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [elderId]
+              properties:
+                elderId:
+                  type: integer
+                  description: 老人ID
+                textContent:
+                  type: string
+                  description: 文本输入内容（可选）
+                voiceFile:
+                  type: string
+                  format: binary
+                  description: 语音文件（mp3/wav，≤50MB，可选）
+                imageFile:
+                  type: string
+                  format: binary
+                  description: 图像文件（jpg/png，≤20MB，可选）
+      responses:
+        "200":
+          description: 分析完成
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EmotionResult" }
+        "400": { description: 未提交任何模态数据，或文件格式不支持 }
+        "403": { description: 老人未授权或无权访问该老人数据 }
+        "503": { description: AI分析服务暂时不可用 }
+
+  /api/emotion/records:
+    get:
+      summary: 获取情感记录列表（历史查询）
+      parameters:
+        - name: elderId
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: startDate
+          in: query
+          schema: { type: string, format: date }
+        - name: endDate
+          in: query
+          schema: { type: string, format: date }
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: pageSize
+          in: query
+          schema: { type: integer, default: 20 }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  list:
+                    type: array
+                    items: { $ref: "#/components/schemas/EmotionRecordSummary" }
+
+  /api/emotion/statistics:
+    get:
+      summary: 获取情感统计数据（用于可视化）
+      parameters:
+        - name: elderId
+          in: query
+          required: true
+          schema: { type: integer }
+        - name: range
+          in: query
+          required: true
+          schema: { type: string, enum: [day, week, month] }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/EmotionStatistics" }
+
+  /api/emotion/dashboard:
+    get:
+      summary: 获取首页概览数据
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todayMonitorCount: { type: integer }
+                  todayAlertCount: { type: integer }
+                  avgHealthScore: { type: number }
+                  systemStatus: { type: string, enum: [normal, warning, error] }
+                  recentRecords:
+                    type: array
+                    items: { $ref: "#/components/schemas/EmotionRecordSummary" }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    EmotionResult:
+      type: object
+      properties:
+        id: { type: integer }
+        emotionLabel: { type: string, enum: [happy, calm, sad, anxious, angry] }
+        confidence: { type: number, format: float }
+        healthScore: { type: number, format: float }
+        textScore: { type: number, nullable: true }
+        voiceScore: { type: number, nullable: true }
+        imageScore: { type: number, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    EmotionRecordSummary:
+      type: object
+      properties:
+        id: { type: integer }
+        elderId: { type: integer }
+        elderName: { type: string }
+        emotionLabel: { type: string }
+        confidence: { type: number }
+        healthScore: { type: number }
+        createdAt: { type: string, format: date-time }
+
+    EmotionStatistics:
+      type: object
+      properties:
+        trend:
+          type: array
+          description: 时间序列数据（折线图）
+          items:
+            type: object
+            properties:
+              date: { type: string }
+              avgHealthScore: { type: number }
+              dominantEmotion: { type: string }
+        distribution:
+          type: object
+          description: 情感类型占比（饼图）
+          additionalProperties: { type: number }
+        dailyStats:
+          type: array
+          description: 每日统计（柱状图）
+          items:
+            type: object
+            properties:
+              date: { type: string }
+              count: { type: integer }
+              avgScore: { type: number }

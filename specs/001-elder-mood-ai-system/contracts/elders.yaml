@@ -1,0 +1,194 @@
+openapi: "3.0.3"
+info:
+  title: ElderMoodAI - 老人信息接口
+  version: "1.0.0"
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/elders:
+    get:
+      summary: 获取老人列表
+      description: |
+        - admin/caregiver: 返回所有老人
+        - family: 仅返回已绑定的老人
+      parameters:
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+        - name: pageSize
+          in: query
+          schema: { type: integer, default: 20 }
+        - name: keyword
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  list:
+                    type: array
+                    items: { $ref: "#/components/schemas/ElderSummary" }
+
+    post:
+      summary: 新增老人
+      description: 仅 admin 和 caregiver 可操作
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ElderInput" }
+      responses:
+        "201":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Elder" }
+        "403": { description: 权限不足 }
+
+  /api/elders/{id}:
+    get:
+      summary: 获取老人详情
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Elder" }
+        "403": { description: 无权访问该老人数据 }
+        "404": { description: 老人不存在 }
+
+    put:
+      summary: 更新老人信息
+      description: admin 和 caregiver 可操作
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ElderInput" }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Elder" }
+        "403": { description: 权限不足 }
+
+  /api/elders/{id}/authorization:
+    patch:
+      summary: 更新隐私授权状态
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [authorized]
+              properties:
+                authorized: { type: boolean }
+      responses:
+        "200": { description: 授权状态更新成功 }
+        "403": { description: 权限不足 }
+
+  /api/elders/{id}/guardians:
+    get:
+      summary: 获取老人绑定的家属列表
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/GuardianInfo" }
+
+    post:
+      summary: 绑定家属
+      description: 仅 admin 可操作
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [userId]
+              properties:
+                userId: { type: integer }
+                relation: { type: string, example: "子女" }
+      responses:
+        "201": { description: 绑定成功 }
+        "409": { description: 已绑定 }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    ElderInput:
+      type: object
+      required: [name, age, gender]
+      properties:
+        name: { type: string }
+        age: { type: integer, minimum: 60, maximum: 120 }
+        gender: { type: string, enum: [male, female, other] }
+        phone: { type: string, nullable: true }
+        address: { type: string, nullable: true }
+
+    ElderSummary:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        age: { type: integer }
+        gender: { type: string }
+        privacyAuthorized: { type: boolean }
+        latestEmotion: { type: string, nullable: true }
+        latestHealthScore: { type: number, nullable: true }
+
+    Elder:
+      allOf:
+        - $ref: "#/components/schemas/ElderSummary"
+        - type: object
+          properties:
+            phone: { type: string, nullable: true }
+            address: { type: string, nullable: true }
+            authorizedAt: { type: string, format: date-time, nullable: true }
+            alertThreshold: { type: object, nullable: true }
+            createdAt: { type: string, format: date-time }
+
+    GuardianInfo:
+      type: object
+      properties:
+        userId: { type: integer }
+        name: { type: string }
+        relation: { type: string, nullable: true }
+        boundAt: { type: string, format: date-time }

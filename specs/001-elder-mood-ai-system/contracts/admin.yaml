@@ -1,0 +1,200 @@
+openapi: "3.0.3"
+info:
+  title: ElderMoodAI - 管理后台接口
+  version: "1.0.0"
+  description: 所有接口仅限 admin 角色访问
+
+security:
+  - bearerAuth: []
+
+paths:
+  /api/admin/users:
+    get:
+      summary: 获取用户列表
+      parameters:
+        - name: role
+          in: query
+          schema: { type: string, enum: [admin, caregiver, family] }
+        - name: isActive
+          in: query
+          schema: { type: boolean }
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  list:
+                    type: array
+                    items: { $ref: "#/components/schemas/UserInfo" }
+
+  /api/admin/users/{id}/status:
+    patch:
+      summary: 启用/禁用账号
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [isActive]
+              properties:
+                isActive: { type: boolean }
+      responses:
+        "200": { description: 状态更新成功 }
+        "403": { description: 不能禁用自己的账号 }
+
+  /api/admin/users/{id}/role:
+    patch:
+      summary: 修改用户角色
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role]
+              properties:
+                role: { type: string, enum: [admin, caregiver, family] }
+      responses:
+        "200": { description: 角色更新成功 }
+
+  /api/admin/config:
+    get:
+      summary: 获取系统配置
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/SystemConfig" }
+
+    put:
+      summary: 更新系统配置
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/SystemConfigInput" }
+      responses:
+        "200": { description: 配置更新成功，立即生效 }
+
+  /api/admin/ai-status:
+    get:
+      summary: 获取AI服务状态监控
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, enum: [normal, degraded, error] }
+                  latencyMs: { type: integer }
+                  accuracyRate: { type: number, nullable: true }
+                  lastCheckedAt: { type: string, format: date-time }
+                  recentErrors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        time: { type: string, format: date-time }
+                        message: { type: string }
+
+  /api/admin/audit-logs:
+    get:
+      summary: 查询审计日志
+      parameters:
+        - name: userId
+          in: query
+          schema: { type: integer }
+        - name: action
+          in: query
+          schema: { type: string }
+        - name: startDate
+          in: query
+          schema: { type: string, format: date }
+        - name: endDate
+          in: query
+          schema: { type: string, format: date }
+        - name: page
+          in: query
+          schema: { type: integer, default: 1 }
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  list:
+                    type: array
+                    items: { $ref: "#/components/schemas/AuditLogEntry" }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    UserInfo:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        phone: { type: string, nullable: true }
+        email: { type: string, nullable: true }
+        role: { type: string }
+        isActive: { type: boolean }
+        lastLoginAt: { type: string, format: date-time, nullable: true }
+        createdAt: { type: string, format: date-time }
+
+    SystemConfig:
+      type: object
+      properties:
+        alertThresholds:
+          type: object
+          description: 全局预警阈值配置
+        notifyMethods:
+          type: object
+          properties:
+            email: { type: boolean }
+            sms: { type: boolean }
+            site: { type: boolean }
+        dataRetentionDays: { type: integer }
+        auditRetentionDays: { type: integer }
+
+    SystemConfigInput:
+      type: object
+      properties:
+        alertThresholds: { type: object }
+        notifyMethods: { type: object }
+        dataRetentionDays: { type: integer, minimum: 30 }
+
+    AuditLogEntry:
+      type: object
+      properties:
+        id: { type: integer }
+        userName: { type: string, nullable: true }
+        action: { type: string }
+        targetType: { type: string, nullable: true }
+        targetId: { type: integer, nullable: true }
+        ipAddress: { type: string, nullable: true }
+        createdAt: { type: string, format: date-time }

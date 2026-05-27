@@ -1,0 +1,107 @@
+@use './variables' as *;
+
+// ===== 基础重置 =====
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  color: $text-primary;
+  background-color: $bg-color;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  height: 100%;
+}
+
+// ===== 滚动条美化 =====
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  &:hover { background: #a8a8a8; }
+}
+
+// ===== 页面过渡动画 =====
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// ===== 通用卡片样式 =====
+.page-card {
+  background: $card-bg;
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+// ===== 页面标题 =====
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: $primary-color;
+    border-radius: 2px;
+  }
+}
+
+// ===== Element Plus 覆盖 =====
+.el-button--primary {
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+
+  &:hover {
+    background-color: $primary-light !important;
+    border-color: $primary-light !important;
+  }
+}
+
+.el-menu-item.is-active {
+  color: $primary-color !important;
+  background-color: rgba($primary-color, 0.1) !important;
+}
+
+// ===== 情感标签颜色 =====
+.emotion-happy  { color: $emotion-happy;   background: rgba($emotion-happy, 0.1);   }
+.emotion-calm   { color: $emotion-calm;    background: rgba($emotion-calm, 0.1);    }
+.emotion-sad    { color: $emotion-sad;     background: rgba($emotion-sad, 0.1);     }
+.emotion-anxious{ color: $emotion-anxious; background: rgba($emotion-anxious, 0.1); }
+.emotion-angry  { color: $emotion-angry;   background: rgba($emotion-angry, 0.1);   }
+
+// ===== 响应式断点 =====
+@mixin mobile {
+  @media (max-width: 768px) { @content; }
+}
+@mixin tablet {
+  @media (max-width: 1024px) { @content; }
+}
