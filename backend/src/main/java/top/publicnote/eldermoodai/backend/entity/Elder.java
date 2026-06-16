@@ -64,6 +64,12 @@ public class Elder {
     private Boolean privacyEnabled = true;
 
     /**
+     * 乐观锁版本号
+     */
+    @Version
+    private Long version;
+
+    /**
      * 创建时间，不可更新
      */
     @Column(name = "created_at", nullable = false, updatable = false)
