@@ -44,6 +44,11 @@
         </el-tab-pane>
       </el-tabs>
 
+      <!-- 注册按钮 -->
+      <div class="register-section">
+        <el-button text @click="showRegisterDialog = true">还没有账号？立即注册</el-button>
+      </div>
+
       <div class="demo-accounts">
         <p>演示账号（点击快速填入）：</p>
         <div class="demo-btns">
@@ -53,6 +58,40 @@
         </div>
       </div>
     </div>
+
+    <!-- 注册对话框 -->
+    <el-dialog v-model="showRegisterDialog" title="用户注册" width="450px" :close-on-click-modal="false">
+      <el-form :model="registerForm" :rules="registerRules" ref="registerFormRef" label-width="80px">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="registerForm.username" placeholder="请输入用户名（3-50字符）" />
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="registerForm.email" placeholder="请输入邮箱" />
+        </el-form-item>
+        <el-form-item label="验证码" prop="verificationCode">
+          <div class="code-row">
+            <el-input v-model="registerForm.verificationCode" placeholder="请输入验证码" />
+            <el-button 
+              :disabled="registerCountdown > 0" 
+              @click="sendRegisterCode" 
+              style="width:120px;flex-shrink:0"
+              :loading="sendingCode">
+              {{ registerCountdown > 0 ? `${registerCountdown}s` : '获取验证码' }}
+            </el-button>
+          </div>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="registerForm.password" type="password" placeholder="请输入密码（6-50字符）" show-password />
+        </el-form-item>
+        <el-form-item label="确认密码" prop="confirmPassword">
+          <el-input v-model="registerForm.confirmPassword" type="password" placeholder="请再次输入密码" show-password />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="showRegisterDialog = false">取消</el-button>
+        <el-button type="primary" @click="handleRegister" :loading="registering">注册</el-button>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -70,18 +109,65 @@ const activeTab = ref('email')
 const loading = ref(false)
 const countdown = ref(0)
 
+// 注册相关状态
+const showRegisterDialog = ref(false)
+const registerCountdown = ref(0)
+const sendingCode = ref(false)
+const registering = ref(false)
+
 const phoneForm = reactive({ phone: '', code: '' })
 const emailForm = reactive({ email: '', password: '' })
+const registerForm = reactive({ 
+  username: '', 
+  email: '', 
+  password: '', 
+  confirmPassword: '',
+  verificationCode: ''
+})
+
 const phoneFormRef = ref()
 const emailFormRef = ref()
+const registerFormRef = ref()
 
 const phoneRules = {
   phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
   code:  [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 }
+
 const emailRules = {
   email:    [{ required: true, type: 'email', message: '请输入有效邮箱', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+}
+
+const registerRules = {
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 50, message: '用户名长度必须在3-50字符之间', trigger: 'blur' }
+  ],
+  email: [
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
+    { type: 'email', message: '请输入有效的邮箱地址', trigger: 'blur' }
+  ],
+  verificationCode: [
+    { required: true, message: '请输入验证码', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 6, max: 50, message: '密码长度必须在6-50字符之间', trigger: 'blur' }
+  ],
+  confirmPassword: [
+    { required: true, message: '请再次输入密码', trigger: 'blur' },
+    { 
+      validator: (rule, value, callback) => {
+        if (value !== registerForm.password) {
+          callback(new Error('两次输入的密码不一致'))
+        } else {
+          callback()
+        }
+      }, 
+      trigger: 'blur' 
+    }
+  ]
 }
 
 function fillDemo(email, password) {
@@ -96,6 +182,83 @@ async function sendCode() {
   ElMessage.success('验证码已发送（Mock：请使用 123456）')
   countdown.value = 60
   const timer = setInterval(() => { if (--countdown.value <= 0) clearInterval(timer) }, 1000)
+}
+
+async function sendRegisterCode() {
+  // 验证邮箱格式
+  if (!registerForm.email) {
+    ElMessage.warning('请先输入邮箱')
+    return
+  }
+  
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailPattern.test(registerForm.email)) {
+    ElMessage.warning('请输入有效的邮箱地址')
+    return
+  }
+
+  sendingCode.value = true
+  try {
+    const response = await axios.post('/api/auth/send-verification-code', { 
+      email: registerForm.email 
+    })
+    
+    if (response.data.success) {
+      ElMessage.success('验证码已发送，请查收邮箱')
+      registerCountdown.value = 60
+      const timer = setInterval(() => { 
+        if (--registerCountdown.value <= 0) clearInterval(timer) 
+      }, 1000)
+    } else {
+      ElMessage.error(response.data.message || '发送验证码失败')
+    }
+  } catch (error) {
+    console.error('发送验证码失败:', error)
+    ElMessage.error(error.response?.data?.message || '发送验证码失败，请稍后重试')
+  } finally {
+    sendingCode.value = false
+  }
+}
+
+async function handleRegister() {
+  try {
+    await registerFormRef.value?.validate()
+  } catch (error) {
+    return
+  }
+
+  registering.value = true
+  try {
+    const response = await axios.post('/api/auth/register', {
+      username: registerForm.username,
+      email: registerForm.email,
+      password: registerForm.password,
+      verificationCode: registerForm.verificationCode
+    })
+
+    if (response.data.success) {
+      ElMessage.success('注册成功！请登录')
+      showRegisterDialog.value = false
+      // 自动填充邮箱到登录表单
+      activeTab.value = 'email'
+      emailForm.email = registerForm.email
+      // 清空注册表单
+      Object.assign(registerForm, { 
+        username: '', 
+        email: '', 
+        password: '', 
+        confirmPassword: '',
+        verificationCode: ''
+      })
+    } else {
+      ElMessage.error(response.data.message || '注册失败')
+    }
+  } catch (error) {
+    console.error('注册失败:', error)
+    ElMessage.error(error.response?.data?.message || '注册失败，请稍后重试')
+  } finally {
+    registering.value = false
+  }
 }
 
 async function loginByPhone() {
@@ -139,8 +302,14 @@ async function loginByEmail() {
   p { color: $primary-color; font-size: 13px; margin-top: 4px; }
 }
 .code-row { display: flex; gap: $spacing-sm; }
+.register-section {
+  text-align: center;
+  margin-top: $spacing-md;
+  padding-top: $spacing-md;
+  border-top: 1px solid $border-light;
+}
 .demo-accounts {
-  margin-top: $spacing-lg; padding-top: $spacing-md;
+  margin-top: $spacing-md; padding-top: $spacing-md;
   border-top: 1px solid $border-light;
   p { font-size: 12px; color: $text-secondary; margin-bottom: $spacing-sm; }
   .demo-btns { display: flex; gap: $spacing-sm; }

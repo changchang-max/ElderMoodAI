@@ -1,0 +1,70 @@
+### 测试用户注册功能
+### 请确保后端服务已启动在 http://localhost:8080
+
+### 1. 发送验证码
+POST http://localhost:8080/api/auth/send-verification-code
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+### 2. 用户注册
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser001",
+  "email": "test@example.com",
+  "password": "Test123456",
+  "verificationCode": "123456"
+}
+
+### 3. 测试重复邮箱注册（应该失败）
+POST http://localhost:8080/api/auth/send-verification-code
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+### 4. 测试无效邮箱格式（应该失败）
+POST http://localhost:8080/api/auth/send-verification-code
+Content-Type: application/json
+
+{
+  "email": "invalid-email"
+}
+
+### 5. 测试用户名过短（应该失败）
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "ab",
+  "email": "test2@example.com",
+  "password": "Test123456",
+  "verificationCode": "123456"
+}
+
+### 6. 测试密码过短（应该失败）
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser002",
+  "email": "test3@example.com",
+  "password": "123",
+  "verificationCode": "123456"
+}
+
+### 7. 测试错误验证码（应该失败）
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser003",
+  "email": "test4@example.com",
+  "password": "Test123456",
+  "verificationCode": "000000"
+}
