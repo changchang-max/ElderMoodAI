@@ -101,7 +101,7 @@ import { useRouter } from 'vue-router'
 import { Phone, Message, Lock } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '@/stores/auth.js'
-import axios from 'axios'
+import { sendVerificationCode, register as registerUser } from '@/api/auth.js'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -178,8 +178,8 @@ function fillDemo(email, password) {
 
 async function sendCode() {
   if (!phoneForm.phone) { ElMessage.warning('请先输入手机号'); return }
-  await axios.post('/api/auth/send-code', { phone: phoneForm.phone })
-  ElMessage.success('验证码已发送（Mock：请使用 123456）')
+  // 手机号登录功能暂未实现，使用本地模拟
+  ElMessage.warning('手机号登录功能暂未实现，请使用邮箱登录')
   countdown.value = 60
   const timer = setInterval(() => { if (--countdown.value <= 0) clearInterval(timer) }, 1000)
 }
@@ -199,22 +199,20 @@ async function sendRegisterCode() {
 
   sendingCode.value = true
   try {
-    const response = await axios.post('/api/auth/send-verification-code', { 
-      email: registerForm.email 
-    })
+    const response = await sendVerificationCode(registerForm.email)
     
-    if (response.data.success) {
+    if (response.success) {
       ElMessage.success('验证码已发送，请查收邮箱')
       registerCountdown.value = 60
       const timer = setInterval(() => { 
         if (--registerCountdown.value <= 0) clearInterval(timer) 
       }, 1000)
     } else {
-      ElMessage.error(response.data.message || '发送验证码失败')
+      ElMessage.error(response.message || '发送验证码失败')
     }
   } catch (error) {
     console.error('发送验证码失败:', error)
-    ElMessage.error(error.response?.data?.message || '发送验证码失败，请稍后重试')
+    ElMessage.error(error.response?.data?.message || error.message || '发送验证码失败，请稍后重试')
   } finally {
     sendingCode.value = false
   }
@@ -229,14 +227,14 @@ async function handleRegister() {
 
   registering.value = true
   try {
-    const response = await axios.post('/api/auth/register', {
+    const response = await registerUser({
       username: registerForm.username,
       email: registerForm.email,
       password: registerForm.password,
       verificationCode: registerForm.verificationCode
     })
 
-    if (response.data.success) {
+    if (response.success) {
       ElMessage.success('注册成功！请登录')
       showRegisterDialog.value = false
       // 自动填充邮箱到登录表单
@@ -248,14 +246,14 @@ async function handleRegister() {
         email: '', 
         password: '', 
         confirmPassword: '',
-        verificationCode: ''
+        verificationCode: '' 
       })
     } else {
-      ElMessage.error(response.data.message || '注册失败')
+      ElMessage.error(response.message || '注册失败')
     }
   } catch (error) {
     console.error('注册失败:', error)
-    ElMessage.error(error.response?.data?.message || '注册失败，请稍后重试')
+    ElMessage.error(error.response?.data?.message || error.message || '注册失败，请稍后重试')
   } finally {
     registering.value = false
   }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import { loginByEmail, loginByPhone, logout as apiLogout } from '@/api/auth.js'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(JSON.parse(localStorage.getItem('elder_user') || 'null'))
@@ -8,15 +8,19 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLoggedIn = computed(() => !!token.value && !!user.value)
   const role = computed(() => user.value?.role || '')
-  const isAdmin = computed(() => role.value === 'admin')
-  const isCaregiver = computed(() => role.value === 'caregiver')
-  const isFamily = computed(() => role.value === 'family')
+  const isAdmin = computed(() => role.value === 'admin' || role.value === 'ADMIN')
+  const isCaregiver = computed(() => role.value === 'caregiver' || role.value === 'CAREGIVER')
+  const isFamily = computed(() => role.value === 'family' || role.value === 'FAMILY' || role.value === 'GUARDIAN')
 
   // 角色权限映射
   const rolePermissions = {
     admin:     ['dashboard', 'monitor', 'visualization', 'alerts', 'elders', 'settings', 'admin', 'help'],
+    ADMIN:     ['dashboard', 'monitor', 'visualization', 'alerts', 'elders', 'settings', 'admin', 'help'],
     caregiver: ['dashboard', 'monitor', 'visualization', 'alerts', 'elders', 'settings', 'help'],
+    CAREGIVER: ['dashboard', 'monitor', 'visualization', 'alerts', 'elders', 'settings', 'help'],
     family:    ['dashboard', 'monitor', 'visualization', 'alerts', 'settings', 'help'],
+    FAMILY:    ['dashboard', 'monitor', 'visualization', 'alerts', 'settings', 'help'],
+    GUARDIAN:  ['dashboard', 'monitor', 'visualization', 'alerts', 'settings', 'help'],
   }
 
   function hasPermission(page) {
@@ -25,20 +29,36 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function login(credentials, type = 'email') {
-    const url = type === 'email' ? '/api/auth/login/email' : '/api/auth/login/phone'
-    const res = await axios.post(url, credentials)
-    if (res.data.code === 200) {
-      token.value = res.data.data.accessToken
-      user.value = res.data.data.user
-      localStorage.setItem('elder_token', token.value)
-      localStorage.setItem('elder_user', JSON.stringify(user.value))
-      return { success: true }
+    try {
+      const res = type === 'email' 
+        ? await loginByEmail(credentials) 
+        : await loginByPhone(credentials)
+      
+      // 兼容两种响应格式
+      // 后端格式: { success: true, message: '', data: User }
+      // Mock格式: { code: 200, data: { accessToken, user } }
+      
+      if (res.success) {
+        // 后端真实响应格式 - 登录功能尚未实现，暂时跳过
+        return { success: false, message: '登录功能尚未实现，请使用演示账号' }
+      } else if (res.code === 200) {
+        // Mock响应格式
+        token.value = res.data.accessToken
+        user.value = res.data.user
+        localStorage.setItem('elder_token', token.value)
+        localStorage.setItem('elder_user', JSON.stringify(user.value))
+        return { success: true }
+      }
+      return { success: false, message: res.message || '登录失败' }
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || '登录失败，请稍后重试' }
     }
-    return { success: false, message: res.data.message }
   }
 
   async function logout() {
-    try { await axios.post('/api/auth/logout') } catch {}
+    try { 
+      await apiLogout() 
+    } catch {}
     token.value = ''
     user.value = null
     localStorage.removeItem('elder_token')

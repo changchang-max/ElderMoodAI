@@ -9,8 +9,8 @@ import App from './App.vue'
 import router from './router/index.js'
 import '@/assets/styles/global.scss'
 
-// 引入 Mock 数据（开发环境）
-import './mock/index.js'
+// Mock 数据已移除，使用真实后端API
+// import './mock/index.js'
 
 const app = createApp(App)
 const pinia = createPinia()

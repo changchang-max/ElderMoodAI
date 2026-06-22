@@ -11,12 +11,8 @@ const API_BASE_URL = '/api/auth'
  * @returns {Promise}
  */
 export const sendVerificationCode = async (email) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/send-verification-code`, { email })
-    return response.data
-  } catch (error) {
-    throw error.response?.data || error
-  }
+  const response = await axios.post(`${API_BASE_URL}/send-verification-code`, { email })
+  return response.data
 }
 
 /**
@@ -29,12 +25,8 @@ export const sendVerificationCode = async (email) => {
  * @returns {Promise}
  */
 export const register = async (registerData) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/register`, registerData)
-    return response.data
-  } catch (error) {
-    throw error.response?.data || error
-  }
+  const response = await axios.post(`${API_BASE_URL}/register`, registerData)
+  return response.data
 }
 
 /**
@@ -45,12 +37,8 @@ export const register = async (registerData) => {
  * @returns {Promise}
  */
 export const loginByEmail = async (loginData) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/login/email`, loginData)
-    return response.data
-  } catch (error) {
-    throw error.response?.data || error
-  }
+  const response = await axios.post(`${API_BASE_URL}/login/email`, loginData)
+  return response.data
 }
 
 /**
@@ -61,12 +49,8 @@ export const loginByEmail = async (loginData) => {
  * @returns {Promise}
  */
 export const loginByPhone = async (loginData) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/login/phone`, loginData)
-    return response.data
-  } catch (error) {
-    throw error.response?.data || error
-  }
+  const response = await axios.post(`${API_BASE_URL}/login/phone`, loginData)
+  return response.data
 }
 
 /**
@@ -75,10 +59,15 @@ export const loginByPhone = async (loginData) => {
  * @returns {Promise}
  */
 export const sendLoginCode = async (phone) => {
-  try {
-    const response = await axios.post(`${API_BASE_URL}/send-code`, { phone })
-    return response.data
-  } catch (error) {
-    throw error.response?.data || error
-  }
+  const response = await axios.post(`${API_BASE_URL}/send-code`, { phone })
+  return response.data
+}
+
+/**
+ * 退出登录
+ * @returns {Promise}
+ */
+export const logout = async () => {
+  const response = await axios.post(`${API_BASE_URL}/logout`)
+  return response.data
 }
