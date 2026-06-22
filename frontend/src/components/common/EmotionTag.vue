@@ -1,23 +1,50 @@
 <template>
   <span class="emotion-tag" :style="{ color: info.color, background: info.color + '20' }">
-    {{ info.icon }} {{ info.label }}
+    <span class="emotion-icon">{{ info.icon }}</span>
+    <span class="emotion-label">{{ info.label }}</span>
   </span>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 
-const props = defineProps({ label: String })
+// Accepts either:
+//   emotion="开心"  (Chinese string, per spec)
+//   label="happy"   (English key, legacy / internal use)
+const props = defineProps({
+  emotion: {
+    type: String,
+    default: ''
+  },
+  label: {
+    type: String,
+    default: ''
+  }
+})
 
-const map = {
-  happy:   { label: '开心', color: '#67C23A', icon: '😊' },
-  calm:    { label: '平静', color: '#409EFF', icon: '😌' },
-  sad:     { label: '低落', color: '#909399', icon: '😔' },
-  anxious: { label: '焦虑', color: '#FF6B35', icon: '😰' },
-  angry:   { label: '愤怒', color: '#F56C6C', icon: '😠' },
+// Map by Chinese label
+const chineseMap = {
+  '开心': { label: '开心', color: '#67C23A', icon: '😊' },
+  '平静': { label: '平静', color: '#409EFF', icon: '😌' },
+  '低落': { label: '低落', color: '#909399', icon: '😔' },
+  '焦虑': { label: '焦虑', color: '#E6A23C', icon: '😰' },
+  '愤怒': { label: '愤怒', color: '#F56C6C', icon: '😠' },
 }
 
-const info = computed(() => map[props.label] || { label: props.label, color: '#909399', icon: '😶' })
+// Map by English key (backward compat)
+const englishMap = {
+  happy:   '开心',
+  calm:    '平静',
+  sad:     '低落',
+  anxious: '焦虑',
+  angry:   '愤怒',
+}
+
+const info = computed(() => {
+  // Prefer the `emotion` prop (Chinese string), fall back to `label` (English key)
+  const key = props.emotion || (englishMap[props.label] ?? props.label)
+  return chineseMap[key] ?? { label: key || '未知', color: '#909399', icon: '😶' }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -30,5 +57,16 @@ const info = computed(() => map[props.label] || { label: props.label, color: '#9
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
+  line-height: 1.6;
+  transition: opacity 0.2s;
+
+  .emotion-icon {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .emotion-label {
+    line-height: 1;
+  }
 }
 </style>

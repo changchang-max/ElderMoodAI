@@ -150,8 +150,8 @@
 
 ### Phase 3: 数据模型和Repository层
 
-- [ ] 8. 创建JPA实体类
-  - [ ] 8.1 创建User实体类
+- [x] 8. 创建JPA实体类
+  - [x] 8.1 创建User实体类
     - 定义字段：id, username, phone, email, passwordHash, role, status, createdAt, updatedAt
     - 添加JPA注解：@Entity, @Table, @Id, @GeneratedValue, @Column
     - 添加Lombok注解：@Data, @NoArgsConstructor, @AllArgsConstructor
@@ -161,45 +161,45 @@
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.8_
     - _MVP: 必需_
 
-  - [ ] 8.2 创建Elder实体类
-    - 定义字段：id, name, gender, birthDate, healthStatus, privacyEnabled, createdAt, updatedAt
-    - 添加JPA注解和Lombok注解
-    - 添加字段验证注解
-    - 定义Gender枚举：MALE, FEMALE, OTHER
+  - [x] 8.2 创建Elder实体类
+    - [x] 定义字段：id, name, gender, birthDate, healthStatus, privacyEnabled, createdAt, updatedAt
+    - [x] 添加JPA注解和Lombok注解
+    - [x] 添加字段验证注解
+    - [x] 定义Gender枚举：MALE, FEMALE, OTHER
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.7_
     - _MVP: 必需_
 
-  - [ ] 8.3 创建ElderGuardian实体类
-    - 定义字段：id, elderId, guardianId, relationship, authorized, createdAt
-    - 添加JPA注解和Lombok注解
-    - 添加唯一约束：@UniqueConstraint(columnNames = {"elder_id", "guardian_id"})
+  - [x] 8.3 创建ElderGuardian实体类
+    - [x] 定义字段：id, elderId, guardianId, relationship, authorized, createdAt
+    - [x] 添加JPA注解和Lombok注解
+    - [x] 添加唯一约束：@UniqueConstraint(columnNames = {"elder_id", "guardian_id"})
     - _Requirements: 4.1, 4.2, 4.3, 4.5_
     - _MVP: 必需_
 
-  - [ ] 8.4 创建EmotionRecord实体类
-    - 定义字段：id, elderId, emotionType, confidenceScore, dataSource, rawDataUrl, analyzedAt, createdAt
-    - 定义EmotionType枚举：HAPPY, CALM, SAD, ANXIOUS, ANGRY
-    - 定义DataSource枚举：VOICE, IMAGE, VIDEO, TEXT, SENSOR
+  - [x] 8.4 创建EmotionRecord实体类
+    - [x] 定义字段：id, elderId, emotionType, confidenceScore, dataSource, rawDataUrl, analyzedAt, createdAt
+    - [x] 定义EmotionType枚举：HAPPY, CALM, SAD, ANXIOUS, ANGRY
+    - [x] 定义DataSource枚举：VOICE, IMAGE, VIDEO, TEXT, SENSOR
     - _Requirements: 5.2, 5.4, 5.5, 5.7_
     - _MVP: 必需_
 
-  - [ ] 8.5 创建AlertRecord实体类
-    - 定义字段：id, elderId, alertType, severity, message, status, handledBy, handledAt, handleNote, createdAt
-    - 定义AlertType枚举：NEGATIVE_EMOTION, ABNORMAL_BEHAVIOR
-    - 定义Severity枚举：LOW, MEDIUM, HIGH, CRITICAL
-    - 定义AlertStatus枚举：PENDING, HANDLED, IGNORED
+  - [x] 8.5 创建AlertRecord实体类
+    - [x] 定义字段：id, elderId, alertType, severity, message, status, handledBy, handledAt, handleNote, createdAt
+    - [x] 定义AlertType枚举：NEGATIVE_EMOTION, ABNORMAL_BEHAVIOR
+    - [x] 定义Severity枚举：LOW, MEDIUM, HIGH, CRITICAL
+    - [x] 定义AlertStatus枚举：PENDING, HANDLED, IGNORED
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.6, 6.12, 6.13_
     - _MVP: 必需_
 
-  - [ ] 8.6 创建AuditLog实体类
-    - 定义字段：id, userId, action, resourceType, resourceId, ipAddress, details, createdAt
-    - 添加@Immutable注解（只读实体）
+  - [x] 8.6 创建AuditLog实体类
+    - [x] 定义字段：id, userId, action, resourceType, resourceId, ipAddress, details, createdAt
+    - [x] 添加@Immutable注解（只读实体）
     - _Requirements: 9.1, 9.9, 9.10, 9.11_
     - _MVP: 必需_
 
-  - [ ] 8.7 创建SystemConfig实体类
-    - 定义字段：id, configKey, configValue, description, updatedAt
-    - 添加唯一约束：@UniqueConstraint(columnNames = {"config_key"})
+  - [x] 8.7 创建SystemConfig实体类
+    - [x] 定义字段：id, configKey, configValue, description, updatedAt
+    - [x] 添加唯一约束：@UniqueConstraint(columnNames = {"config_key"})
     - _Requirements: 12.1, 12.2, 12.11, 12.12_
     - _MVP: 必需_
 

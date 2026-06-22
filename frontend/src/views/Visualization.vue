@@ -37,7 +37,7 @@
       <el-col :span="14">
         <div class="page-card">
           <div class="card-title">每日统计</div>
-          <DailyBar :data="stats.trend.map(d => ({ date: d.date, count: d.count, avgScore: d.avgHealthScore }))" />
+          <DailyBar :data="stats.trend" />
         </div>
       </el-col>
       <el-col :span="10">

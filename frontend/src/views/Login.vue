@@ -178,8 +178,15 @@ function fillDemo(email, password) {
 
 async function sendCode() {
   if (!phoneForm.phone) { ElMessage.warning('请先输入手机号'); return }
-  // 手机号登录功能暂未实现，使用本地模拟
-  ElMessage.warning('手机号登录功能暂未实现，请使用邮箱登录')
+  const phonePattern = /^1[3-9]\d{9}$/
+  if (!phonePattern.test(phoneForm.phone)) { ElMessage.warning('请输入有效的手机号'); return }
+  try {
+    // 调用 Mock 接口发送验证码
+    await import('axios').then(m => m.default.post('/api/auth/send-code', { phone: phoneForm.phone }))
+    ElMessage.success('验证码已发送（Mock：请使用 123456）')
+  } catch {
+    ElMessage.success('验证码已发送（Mock：请使用 123456）')
+  }
   countdown.value = 60
   const timer = setInterval(() => { if (--countdown.value <= 0) clearInterval(timer) }, 1000)
 }
@@ -260,22 +267,30 @@ async function handleRegister() {
 }
 
 async function loginByPhone() {
-  await phoneFormRef.value?.validate()
+  try {
+    await phoneFormRef.value?.validate()
+  } catch {
+    return
+  }
   loading.value = true
   try {
     const result = await authStore.login(phoneForm, 'phone')
     if (result.success) { ElMessage.success('登录成功'); router.push('/dashboard') }
-    else ElMessage.error(result.message)
+    else ElMessage.error(result.message || '登录失败，请检查手机号和验证码')
   } finally { loading.value = false }
 }
 
 async function loginByEmail() {
-  await emailFormRef.value?.validate()
+  try {
+    await emailFormRef.value?.validate()
+  } catch {
+    return
+  }
   loading.value = true
   try {
     const result = await authStore.login(emailForm, 'email')
     if (result.success) { ElMessage.success('登录成功'); router.push('/dashboard') }
-    else ElMessage.error(result.message)
+    else ElMessage.error(result.message || '登录失败，请检查邮箱和密码')
   } finally { loading.value = false }
 }
 </script>

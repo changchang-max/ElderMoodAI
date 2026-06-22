@@ -1,0 +1,418 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "T020 [P] 创建 `frontend/src/components/common/StatCard.vue`：数据总览卡片组件，接收 `title`/`value`/`icon`/`color`/`trend` props，支持数值动画效果": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799365
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140813730
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140870983
+      }
+    ],
+    "T021 [P] 创建 `frontend/src/components/common/EmotionTag.vue`：情感标签组件，根据情感类型显示对应颜色（开心=绿、平静=蓝、低落=灰、焦虑=橙、愤怒=红）和图标": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799522
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140880233
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140974589
+      }
+    ],
+    "T022 [P] 创建 `frontend/src/components/common/AlertBadge.vue`：预警等级徽章组件，高=红色、中=橙色、低=黄色": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799596
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140983812
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141269349
+      }
+    ],
+    "T023 [P] 创建 `frontend/src/components/charts/TrendLine.vue`：情感趋势折线图（ECharts），接收时间序列数据，支持日/周/月切换，主题色橙色": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799693
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141277698
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141440639
+      }
+    ],
+    "T024 [P] 创建 `frontend/src/components/charts/EmotionPie.vue`：情感占比饼图（ECharts），展示各情感类型占比，含图例": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799728
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141449093
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141555172
+      }
+    ],
+    "T025 [P] 创建 `frontend/src/components/charts/DailyBar.vue`：每日情感统计柱状图（ECharts），展示每日监测次数和平均健康分": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799921
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141563760
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141685990
+      }
+    ],
+    "T026 [P] 创建 `frontend/src/components/charts/HeatMap.vue`：时段分布热力图（ECharts），展示一天24小时各时段情感分布": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140799973
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782141696807
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142101158
+      }
+    ],
+    "T027 [P] 创建 `frontend/src/components/charts/HealthGauge.vue`：情感健康评分仪表盘（ECharts），0~100分，颜色随分值变化（绿/黄/红）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800031
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142110905
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142207365
+      }
+    ],
+    "T028 [US1] 创建 `frontend/src/views/Login.vue`：登录页（无侧边栏，居中卡片布局），含手机号+验证码和邮箱+密码两个 Tab，\"获取验证码\"按钮（60秒倒计时 Mock），登录按钮调用 Mock 接口，成功后跳转 `/dashboard`，失败显示错误提示": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800068
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142217122
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142353139
+      }
+    ],
+    "T029 [US1] 创建 `frontend/src/views/403.vue`：权限不足提示页，显示\"您没有权限访问此页面\"，提供返回首页按钮": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800103
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142365305
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142377547
+      }
+    ],
+    "T030 [US1] 在 `frontend/src/router/index.js` 中完善权限守卫逻辑：家属角色访问 `/admin` 时跳转403，未登录访问任何页面时跳转 `/login`，登录后访问 `/login` 自动跳转 `/dashboard`": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800135
+      },
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782142390336
+      }
+    ],
+    "T031 [US2] 创建 `frontend/src/views/ElderManage.vue`：老人信息管理页，含顶部搜索框+添加按钮，Element Plus Table 展示老人列表（姓名/年龄/监护人/联系方式/授权状态/操作列），支持分页（每页10条）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800171
+      }
+    ],
+    "T032 [US2] 在 `ElderManage.vue` 中实现新增/编辑弹窗（`el-dialog`）：表单含姓名、年龄、性别、联系方式、地址字段，表单验证（姓名必填、年龄60~120），提交后更新 Mock 数据并刷新列表": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800218
+      }
+    ],
+    "T033 [US2] 在 `ElderManage.vue` 中实现隐私授权开关（`el-switch`）：切换时弹出确认对话框（\"确认开启/关闭隐私授权？\"），确认后更新授权状态，授权时间记录为当前时间，未授权老人的操作列显示\"采集已禁用\"提示": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800249
+      }
+    ],
+    "T034 [US3] 创建 `frontend/src/views/EmotionMonitor.vue`：实时情感监测页，上半部分为采集区（老人选择下拉框，仅显示已授权老人），下半部分为结果展示区（初始为空状态）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800400
+      }
+    ],
+    "T035 [US3] 在 `EmotionMonitor.vue` 中实现三种采集方式 UI：文本输入框（`el-input` 多行）、语音上传按钮（`el-upload`，接受 mp3/wav，显示文件名和大小，模拟上传进度条）、图像上传（`el-upload`，接受 jpg/png，显示缩略图预览）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800460
+      }
+    ],
+    "T036 [US3] 在 `EmotionMonitor.vue` 中实现\"开始分析\"按钮：点击后显示加载动画（`el-progress` 进度条 + \"分析中...\"文字），调用 `mockAnalyze.js` 模拟2~5秒延迟，完成后展示结果": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800491
+      }
+    ],
+    "T037 [US3] 在 `EmotionMonitor.vue` 中实现分析结果展示区：显示情感标签（`EmotionTag` 组件）、置信度进度条、三模态分项得分（文本/语音/图像各一个进度条，未提交的模态显示\"未采集\"）、`HealthGauge` 仪表盘": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800523
+      }
+    ],
+    "T038 [US3] 在 `EmotionMonitor.vue` 中实现预警触发逻辑：分析结果为\"焦虑\"或\"愤怒\"且置信度 ≥0.7 时，调用 `notification` store 的 `addAlert()` 方法，同时弹出 `el-notification` 预警提示（红色，含老人姓名和情感状态）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800551
+      }
+    ],
+    "T039 [US4] 创建 `frontend/src/views/Dashboard.vue`：首页概览大屏，顶部4个 `StatCard` 组件（今日监测人数/今日预警次数/平均情感健康分/系统运行状态），使用 `dashboard.js` Mock 数据": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800582
+      }
+    ],
+    "T040 [US4] 在 `Dashboard.vue` 中实现中部图表区：左侧 `TrendLine`（近7天情感趋势折线图，占60%宽度），右侧 `EmotionPie`（情感类型占比饼图，占40%宽度）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800613
+      }
+    ],
+    "T041 [US4] 在 `Dashboard.vue` 中实现底部列表区：左侧最新预警列表（显示最近5条，含 `AlertBadge` 等级标识，点击跳转预警中心），右侧最近监测记录（显示最近5条，含 `EmotionTag`）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800649
+      }
+    ],
+    "T042 [US4] 创建 `frontend/src/views/Visualization.vue`：历史数据可视化页，顶部筛选栏（老人姓名下拉 + 时间范围单选：日/周/月），筛选条件变更时所有图表数据同步更新": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800689
+      }
+    ],
+    "T043 [US4] 在 `Visualization.vue` 中实现图表区：`TrendLine`（情感趋势曲线）、`DailyBar`（每日统计柱状图）、`HeatMap`（时段分布热力图），三图表响应筛选条件": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800860
+      }
+    ],
+    "T044 [US4] 在 `Visualization.vue` 中实现底部历史记录表格：Element Plus Table，含情感标签/置信度/健康评分/分析时间列，支持分页，无数据时显示空状态提示\"暂无数据，请先进行情感采集\"": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800890
+      }
+    ],
+    "T045 [US5] 创建 `frontend/src/views/AlertCenter.vue`：预警中心页，顶部筛选 Tab（全部/未处理/已处理），列表展示预警记录（预警时间/老人姓名/情感状态 `EmotionTag`/预警等级 `AlertBadge`/处理状态/操作列）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800922
+      }
+    ],
+    "T046 [US5] 在 `AlertCenter.vue` 中实现\"标记已处理\"操作：点击后弹出确认对话框，确认后更新 Mock 数据中该记录状态为\"已处理\"，记录处理时间为当前时间，列表实时刷新": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800957
+      }
+    ],
+    "T047 [US5] 在 `AlertCenter.vue` 中实现右侧批量操作区：勾选多条未处理记录后，\"批量标记已处理\"按钮激活，点击后批量更新状态": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140800988
+      }
+    ],
+    "T048 [US5] 完善 `AppHeader.vue` 中的消息通知功能：点击铃铛图标弹出通知下拉面板，展示最近5条预警通知（含老人姓名、情感状态、时间），未读数量徽章实时更新，点击\"查看全部\"跳转预警中心": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801012
+      }
+    ],
+    "T049 [US6] 创建 `frontend/src/views/Settings.vue`：系统设置页，使用 `el-tabs` 分为4个 Tab：账号信息/预警阈值/数据隐私/推送方式": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801042
+      }
+    ],
+    "T050 [US6] 在 `Settings.vue` 的\"账号信息\" Tab 中实现：展示当前用户姓名/角色/手机号/邮箱，提供修改密码表单（旧密码/新密码/确认密码，Mock 验证）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801072
+      }
+    ],
+    "T051 [US6] 在 `Settings.vue` 的\"预警阈值\" Tab 中实现：展示全局预警阈值配置（焦虑/低落/愤怒各情感的置信度阈值滑块），保存后 Mock 更新 SystemConfig": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801111
+      }
+    ],
+    "T052 [US6] 在 `Settings.vue` 的\"数据隐私\" Tab 中实现：展示数据加密状态（\"AES-256 已启用\"绿色标识）、数据保留期限设置、\"导出我的数据\"按钮（Mock 下载提示）、\"删除数据\"按钮（二次确认弹窗，确认后 Mock 清除数据并提示\"操作已记录至审计日志\"）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801169
+      }
+    ],
+    "T053 [US6] 在 `Settings.vue` 的\"推送方式\" Tab 中实现：三个开关（站内信/短信/邮件），选择邮件时动态显示\"邮件授权码\"输入框（`el-input` type=password），保存后 Mock 更新用户推送配置": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801199
+      }
+    ],
+    "T054 [US7] 创建 `frontend/src/views/admin/AdminPanel.vue`：管理后台主页，使用 `el-tabs` 分为3个 Tab：用户管理/系统配置/AI状态监控": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801230
+      }
+    ],
+    "T055 [US7] 在 `AdminPanel.vue` 的\"用户管理\" Tab 中实现：用户列表表格（姓名/角色/手机号/状态/最后登录时间/操作），操作列含\"启用/禁用\"开关和\"修改角色\"下拉，Mock 更新用户状态，禁用自己的账号时提示\"不能禁用当前登录账号\"": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801382
+      }
+    ],
+    "T056 [US7] 在 `AdminPanel.vue` 的\"系统配置\" Tab 中实现：全局预警阈值配置表单（与 Settings.vue 中的阈值设置一致，但此处为管理员视角），数据保留天数设置，保存后 Mock 更新 SystemConfig 并提示\"配置已生效\"": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801412
+      }
+    ],
+    "T057 [US7] 在 `AdminPanel.vue` 的\"AI状态监控\" Tab 中实现：服务状态卡片（正常=绿色/异常=红色）、模拟识别准确率（85%）、模拟推理耗时（1.2秒）、最近错误日志列表（Mock 数据，含时间和错误信息），\"刷新状态\"按钮（Mock 随机返回正常/异常状态）": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801444
+      }
+    ],
+    "T058 [P] 创建 `frontend/src/views/Help.vue`：帮助中心页，使用 `el-collapse` 展示常见问题（FAQ），含系统介绍、角色说明、操作指引": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801480
+      }
+    ],
+    "T059 [P] 实现移动端极简布局适配：在 `AppLayout.vue` 中添加响应式断点（`<768px`），小屏时侧边栏改为汉堡菜单抽屉（`el-drawer`），图表自适应缩小，按钮放大": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801508
+      }
+    ],
+    "T060 [P] 在 `frontend/src/router/index.js` 中添加路由过渡动画（`<transition name=\"fade\">`），页面切换时淡入淡出效果": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801674
+      }
+    ],
+    "T061 [P] 全局错误处理：在 `main.js` 中配置 Vue 全局错误处理，Mock 接口失败时显示 `el-message` 错误提示": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801705
+      }
+    ],
+    "T062 更新 `frontend/src/mock/index.js`：为所有 Mock 接口添加随机延迟（50~200ms），模拟真实网络请求感": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801740
+      }
+    ],
+    "T063 [P] 在 `frontend/public/` 中添加 `favicon.ico`（橙色主题图标），更新 `index.html` 的 `<title>` 为\"居家老人情感分析及可视化系统\"": [
+      {
+        "executionId": "999b6a83-1255-48f2-a567-2a136bf23757",
+        "chatSessionId": "sess_f6ad4a67-4b14-4203-bbf9-51a654c444f5",
+        "timestamp": 1782140801776
+      }
+    ]
+  }
+}
